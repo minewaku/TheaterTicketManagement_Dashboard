@@ -1,13 +1,15 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
-import ThemeContextProvider from './context/ThemeContext'
+import { StrictMode } from "react"
+import { createRoot } from "react-dom/client"
+import App from "./App.jsx"
+import "./index.css"
+import { ThemeProvider, ModalProvider } from "~/store/context"
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <ThemeContextProvider> 
-      <App />
-    </ThemeContextProvider>
-  </StrictMode>,
+createRoot(document.getElementById("root")).render(
+    // <StrictMode>
+        <ThemeProvider>
+            <ModalProvider>
+                <App />
+            </ModalProvider>
+        </ThemeProvider>
+    // </StrictMode>,
 )

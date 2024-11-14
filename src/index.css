@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -25,39 +25,190 @@
         @apply text-sky-500 hover:underline;
     } */
 
-    body {
-        @apply m-0 font-normal font-sans bg-white text-indigo-950
+    /* purple-blue */
+    /* purple-blue */
+
+    :root {
+        @apply transition-colors duration-300 ease-in-out;
+        --color-primary: hsl(262, 64%, 47%);
+        --color-secondary: hsl(207, 86%, 54%);
+        --color-tertiary: hsl(45, 100%, 51%);
+        /* --color-bg-base: hsl(270, 47%, 94%); */
+        --color-bg-base: hsl(0, 0%, 100%);
+        --color-bg-primary: hsl(267, 46%, 94%);
+        --color-bg-secondary: hsl(207, 79%, 95%);
+        --color-bg-layout: hsl(210, 30.8%, 94.9%);
+        --color-bg-search: hsl(210, 40%, 98%);
+        --color-border: hsl(210, 18%, 91%);
+        --color-border-search: hsl(0, 0%, 74.1%);
+        --color-text-base: hsl(216, 21%, 27%);
+        --color-scrollbar: hsl(0, 0%, 60%);
+        --color-scrollbar_hover: hsl(215, 13%, 47%);
+        --color-disabled: hsl(238, 15%, 63%);
     }
 
-/* Sidebar styles */
-.sidebar {
-    height: 100vh; /* Full height of the viewport */
-    overflow-y: hidden; /* Hide scrollbar by default */
-    transition: overflow-y 0.2s; /* Smooth transition for overflow change */
-}
+    :root .purple-blue.light {
+        --color-primary: hsl(262, 64%, 47%);
+        --color-secondary: hsl(207, 86%, 54%);
+        --color-tertiary: hsl(45, 100%, 51%);
+        /* --color-bg-base: hsl(270, 47%, 94%); */
+        --color-bg-base: hsl(0, 0%, 100%);
+        --color-bg-primary: hsl(267, 46%, 94%);
+        --color-bg-secondary: hsl(207, 79%, 95%);
+        --color-bg-search: hsl(210, 40%, 98%);
+        --color-border: hsl(210, 18%, 91%);
+        --color-border-search: hsl(0, 0%, 74.1%);
+        --color-text-base: hsl(216, 21%, 27%);
+        --color-search-icon: hsla(0, 0%, 0%, 0.54);
+        --color-scrollbar: hsl(0, 0%, 60%);
+        --color-scrollbar_hover: hsl(215, 13%, 47%);
+    }
 
-/* Show scrollbar on hover */
-.sidebar:hover {
-    overflow-y: auto; /* Show scrollbar on hover */
-}
+    :root .purple-blue.dark {
+        --color-primary: hsl(262, 64%, 47%);
+        --color-secondary: hsl(207, 86%, 54%);
+        --color-tertiary: hsl(45, 100%, 51%);
+        /* --color-bg-base: hsl(0, 0%, 7%); */
+        --color-bg-base: hsl(0, 0%, 100%);
+        --color-bg-primary: hsl(0, 0%, 12%);
+        --color-bg-secondary: hsl(0, 0%, 16%);
+        --color-border: hsl(0, 0%, 20%);
+        --color-text-base: hsl(0, 0%, 88%);
+        --color-scrollbar: hsl(0, 0%, 40%);
+        --color-scrollbar_hover: hsl(0, 0%, 53%);
+    }
 
-/* Custom scrollbar styles for WebKit browsers (Chrome, Safari) */
-.sidebar::-webkit-scrollbar {
-    width: 5px; /* Width of the scrollbar */
-}
+    /* ocean */
+    :root .ocean.light {
+        --color-primary: hsl(183, 100%, 42%);
+        --color-secondary: hsl(196, 98%, 48%);
+        --color-tertiary: hsl(196, 100%, 63%);
+        /* --color-bg-base: hsl(197, 73%, 94%); */
+        --color-bg-base: hsl(0, 0%, 100%);
+        --color-bg-primary: hsl(197, 63%, 89%);
+        --color-bg-secondary: hsl(187, 63%, 83%);
+        --color-bg-search: hsl(210, 40%, 98%);
+        /* --color-border: hsl(204, 98%, 41%); */
+        --color-border: hsl(210, 18%, 91%);
+        --color-border-search: hsl(0, 0%, 74.1%);
+        /* --color-text-base: hsl(210, 99%, 30%); */
+        --color-text-base: hsl(216, 21%, 27%);
+        --color-search-icon: hsla(0, 0%, 0%, 0.54);
+        --color-scrollbar: hsl(183, 100%, 33%);
+        --color-scrollbar_hover: hsl(183, 100%, 42%);
+    }
 
-.sidebar::-webkit-scrollbar-track {
-    background: white; /* Background of the scrollbar track */
-    border-radius: 10px; /* Rounded corners for the track */
-}
+    :root .ocean.dark {
+        --color-primary: hsl(183, 100%, 42%);
+        --color-secondary: hsl(196, 98%, 48%);
+        --color-tertiary: hsl(196, 100%, 63%);
+        --color-bg-base: hsl(208, 64%, 10%);
+        --color-bg-primary: hsl(194, 59%, 16%);
+        --color-bg-secondary: hsl(194, 68%, 27%);
+        /* --color-border: hsl(199, 49%, 21%); */
+        --color-border: hsl(210, 18%, 91%);
+        --color-text-base: hsl(180, 100%, 93%);
+        --color-scrollbar: hsl(183, 100%, 20%);
+        --color-scrollbar_hover: hsl(183, 100%, 33%);
+    }
 
-.sidebar::-webkit-scrollbar-thumb {
-    background: #999; /* Color of the scrollbar thumb */
-    border-radius: 10px; /* Rounded corners for the thumb *//* Smooth transition for the thumb color */
-}
+    /* sunset */
+    :root .sunset.light {
+        --color-primary: hsl(14, 100%, 57%);
+        --color-secondary: hsl(45, 100%, 51%);
+        --color-tertiary: hsl(54, 100%, 63%);
+        /* --color-bg-base: hsl(39, 100%, 94%); */
+        --color-bg-base: hsl(0, 0%, 100%);
+        --color-bg-primary: hsl(35, 100%, 85%);
+        --color-bg-secondary: hsl(35, 100%, 75%);
+        --color-bg-search: hsl(210, 40%, 98%);
+        /* --color-border: hsl(53, 98%, 60%); */
+        --color-border: hsl(210, 18%, 91%);
+        --color-border-search: hsl(0, 0%, 74.1%);
+        /* --color-text-base: hsl(18, 41%, 24%); */
+        --color-text-base: hsl(216, 21%, 27%);
+        --color-search-icon: hsla(0, 0%, 0%, 0.54);
+        --color-scrollbar: hsl(14, 100%, 46%);
+        --color-scrollbar_hover: hsl(14, 100%, 63%);
+    }
 
-.sidebar::-webkit-scrollbar-thumb:hover {
-    background: #697586; /* Darken on hover *//* Smooth transition for hover state */
-}
+    :root .sunset.dark {
+        --color-primary: hsl(14, 100%, 57%);
+        --color-secondary: hsl(45, 100%, 51%);
+        --color-tertiary: hsl(54, 100%, 63%);
+        /* --color-bg-base: hsl(0, 0%, 11%); */
+        --color-bg-base: hsl(0, 0%, 100%);
+        --color-bg-primary: hsl(15, 37%, 19%);
+        --color-bg-secondary: hsl(15, 24%, 29%);
+        --color-border: hsl(15, 24%, 38%);
+        --color-text-base: hsl(15, 100%, 87%);
+        --color-scrollbar: hsl(14, 100%, 46%);
+        --color-scrollbar_hover: hsl(14, 100%, 63%);
+    }
 
+    /* grayscale */
+    :root .grayscale.light {
+        --color-primary: hsl(0, 0%, 46%);
+        --color-secondary: hsl(0, 0%, 74%);
+        --color-tertiary: hsl(0, 0%, 88%);
+        /* --color-bg-base: hsl(0, 0%, 98%); */
+        --color-bg-base: hsl(0, 0%, 100%);
+        --color-bg-primary: hsl(0, 0%, 96%);
+        --color-bg-secondary: hsl(0, 0%, 93%);
+        --color-bg-search: hsl(210, 40%, 98%);
+        /* --color-border: hsl(0, 0%, 74%); */
+        --color-border: hsl(210, 18%, 91%);
+        --color-border-search: hsl(0, 0%, 74.1%);
+        /* --color-text-base: hsl(0, 0%, 13%); */
+        --color-text-base: hsl(216, 21%, 27%);
+        --color-search-icon: hsla(0, 0%, 0%, 0.54);
+        --color-scrollbar: hsl(0, 0%, 62%);
+        --color-scrollbar_hover: hsl(0, 0%, 46%);
+    }
+
+    :root .grayscale.dark {
+        --color-primary: hsl(0, 0%, 46%);
+        --color-secondary: hsl(0, 0%, 74%);
+        --color-tertiary: hsl(0, 0%, 88%);
+        --color-bg-base: hsl(0, 0%, 7%);
+        --color-bg-primary: hsl(0, 0%, 12%);
+        --color-bg-secondary: hsl(0, 0%, 17%);
+        --color-border: hsl(0, 0%, 20%);
+        --color-text-base: hsl(0, 0%, 88%);
+        --color-scrollbar: hsl(0, 0%, 40%);
+        --color-scrollbar_hover: hsl(0, 0%, 53%);
+    }
+
+    body {
+        @apply m-0 bg-base_bg font-sans text-sm font-normal text-txt;
+    }
+
+    /* Sidebar styles */
+    .sidebar {
+        height: 100vh;
+        overflow-y: hidden;
+        transition: overflow-y 0.2s;
+    }
+
+    .sidebar:hover {
+        overflow-y: auto;
+    }
+
+    /* Custom scrollbar styles for WebKit browsers (Chrome, Safari) */
+    .sidebar::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+        background: var(--color-bg-base);
+        border-radius: 10px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+        @apply bg-scrollbar;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb:hover {
+        @apply bg-scrollbar__hover;
+    }
 }
