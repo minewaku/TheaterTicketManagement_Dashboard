@@ -1,6 +1,4 @@
 import { HiOutlineViewGrid, HiOutlineQuestionMarkCircle, HiOutlineCog } from 'react-icons/hi';
-
-import { MdOutlineArticle } from 'react-icons/md';
 import {
     NotificationPopover,
     ReportPopover,
@@ -12,12 +10,12 @@ import { RiUser3Line } from 'react-icons/ri';
 import { IoIosLogOut } from 'react-icons/io';
 import { MdMeetingRoom } from 'react-icons/md';
 import { MdOutlineFastfood } from 'react-icons/md';
-import { IoTicketSharp } from "react-icons/io5";
-import { MdLocalMovies } from 'react-icons/md';
-import { MdOutlineMovie } from "react-icons/md";
-import { RiMovie2Line } from "react-icons/ri";
-import { HiOutlineTicket } from "react-icons/hi";
-import { GrSchedules } from "react-icons/gr";
+import { RiMovie2Line } from 'react-icons/ri';
+import { HiOutlineTicket } from 'react-icons/hi';
+import { GrSchedules } from 'react-icons/gr';
+import { RiDiscountPercentLine } from 'react-icons/ri';
+import { MdOutlineChair } from "react-icons/md";
+import { FaCircleUser } from "react-icons/fa6";
 
 export const HEADER_ITEMS = [LanguagePopover, NotificationPopover, ThemePopover, ReportPopover];
 
@@ -53,10 +51,10 @@ export const SIDEBAR_ITEMS = [
                 icon: <HiOutlineViewGrid />,
             },
             {
-                key: 'posts',
-                label: 'Posts',
-                path: '/posts',
-                icon: <MdOutlineArticle />,
+                key: 'users',
+                label: 'Users',
+                path: '/users',
+                icon: <FaCircleUser />,
             },
             {
                 key: 'rooms',
@@ -75,6 +73,12 @@ export const SIDEBAR_ITEMS = [
                 label: 'Schedule',
                 path: '/schedule',
                 icon: <GrSchedules />,
+        },
+            {
+                key: 'seats',
+                label: 'Seats',
+                path: '/seats',
+                icon: <MdOutlineChair />,
             },
             {
                 key: 'tickets',
@@ -88,6 +92,12 @@ export const SIDEBAR_ITEMS = [
                 path: '/food',
                 icon: <MdOutlineFastfood />,
             },
+            {
+                key: 'discount',
+                label: 'Discount',
+                path: '/discount',
+                icon: <RiDiscountPercentLine />
+            }
         ],
     },
     {

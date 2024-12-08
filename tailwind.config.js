@@ -13,12 +13,13 @@ export default {
                 layout_bg: "var(--color-bg-layout)",
                 search_bg: "var(--color-bg-search)",
                 bder: "var(--color-border)", 
-                "bder-search": "var(--color-border-search)",
                 txt: "var(--color-text-base)", 
-                "search-icon": "var(--color-search-icon)",
                 scrollbar: "var(--color-scrollbar)", 
                 scrollbar__hover: "var(--color-scrollbar_hover)", 
                 disabled: "var(--color-disabled)",
+                success: "var(--color-success)",
+                warning: "var(--color-warning)",
+                error: "var(--color-error)",
                 purpleBlue: {
                     light: {
                         primary: "rgb(103, 58, 183)", // Primary base color

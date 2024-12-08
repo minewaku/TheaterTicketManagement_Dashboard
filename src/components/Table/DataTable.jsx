@@ -1,4 +1,5 @@
 import { useState, useEffect, useReducer } from 'react';
+import get from 'lodash/get';
 import { Table, TableContainer, TablePagination, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 import { Paper, Typography, Box, Checkbox } from '@mui/material';
 import { FaArrowDown } from 'react-icons/fa6';
@@ -6,31 +7,36 @@ import { FaRegPlusSquare } from 'react-icons/fa';
 import { FaRegEdit } from 'react-icons/fa';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { IoFilter } from 'react-icons/io5';
+import { FaRegEye } from 'react-icons/fa';
 import classNames from 'classnames';
 import { useModal } from '~/hooks';
 import { filterReducer, initialState } from '~/store/reducers/filterReducer';
 import { FILTER_ACTIONS } from '~/store/reducers/actions';
 
-const DataTable = ({ headers, modals, sizeOptions, apiServices }) => {
-    const { modal, closeModal, openModal } = useModal();
-    const { get } = apiServices;
+const TABLE_TYPES = {
+    CRUD_TABLE: 'CRUD_TABLE',
+    DETAILS_TABLE: 'DETAILS_TABLE',
+};
+
+const DataTable = ({ label = 'Datatable', headers, modals, sizeOptions, apiServices }) => {
+    const { modal, openModal } = useModal();
 
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [selected, setSelected] = useState([]);
+    const [total, setTotal] = useState(0);
 
     const [state, dispatch] = useReducer(filterReducer, {
         ...initialState,
-        filter: { ...initialState.filter, _limit: sizeOptions[0] },
+        filter: { ...initialState.filter, limit: sizeOptions[0] },
     });
-
-    console.log('selected: ', selected);
 
     const fetchData = async () => {
         try {
             setLoading(true);
             const response = await apiServices.get(state.filter);
-            setData(response.data);
+            setData(response.records);
+            setTotal(response.totalRecords);
             setLoading(false);
             setSelected([]);
         } catch (error) {
@@ -65,64 +71,59 @@ const DataTable = ({ headers, modals, sizeOptions, apiServices }) => {
             <Paper sx={{ width: '100%', mb: 2 }} elevation={0}>
                 <Typography variant="h6" component="div" sx={{ px: 3, py: 3 }}>
                     <div className="flex items-center justify-between">
-                        <span className="text-xl font-bold">Posts</span>
+                        <span className="text-xl font-bold text-txt">{label}</span>
 
-                        <div className="flex items-center">
+                        <div className="flex items-center gap-x-3">
+                            {modals.Inspect ? (
+                                <IconButton
+                                    isEnabled={selected.length === 1}
+                                    onClick={() =>
+                                        openModal(
+                                            <modals.Inspect data={data.find((item) => item.id === selected[0])} />
+                                        )
+                                    }
+                                >
+                                    <FaRegEye className="text-xl" />
+                                </IconButton>
+                            ) : null}
+
                             {modals.Create ? (
-                                <button onClick={() => openModal(<modals.Create />)} className="me-5 text-primary">
+                                <IconButton isEnabled={true} onClick={() => openModal(<modals.Create />)}>
                                     <FaRegPlusSquare className="text-xl" />
-                                </button>
+                                </IconButton>
                             ) : null}
 
                             {modals.Edit ? (
-                                <button
-                                    disabled={selected.length > 1 || selected.length == 0}
+                                <IconButton
+                                    isEnabled={selected.length === 1}
                                     onClick={() =>
                                         openModal(<modals.Edit data={data.find((item) => item.id === selected[0])} />)
                                     }
-                                    className={classNames(
-                                        selected.length > 1 || selected.length == 0 ? 'text-disabled' : 'text-primary',
-                                        'me-5 transition duration-100 ease-in-out'
-                                    )}
                                 >
                                     <FaRegEdit className="text-xl" />
-                                </button>
+                                </IconButton>
                             ) : null}
 
                             {modals.Delete ? (
-                                <button
-                                    disabled={selected.length === 0}
+                                <IconButton
+                                    isEnabled={selected.length > 0}
                                     onClick={() => openModal(<modals.Delete ids={selected} />)}
-                                    className={classNames(
-                                        selected.length < 1 ? 'text-disabled' : 'text-primary',
-                                        'me-5 transition duration-100 ease-in-out'
-                                    )}
                                 >
                                     <FaRegTrashAlt className="text-xl" />
-                                </button>
+                                </IconButton>
                             ) : null}
 
                             {modal}
 
-                            <button className="me-3" disabled={state.filter._sort.length === 0}>
-                                {state.filter._order === 'asc' ? (
-                                    <IoFilter
-                                        onClick={() => handleChangeOrder('desc')}
-                                        className={classNames(
-                                            state.filter._sort.length === 0 ? 'text-disabled' : 'text-primary',
-                                            'text-xl duration-500 ease-in-out'
-                                        )}
-                                    />
-                                ) : (
-                                    <IoFilter
-                                        onClick={() => handleChangeOrder('asc')}
-                                        className={classNames(
-                                            state.filter._sort.length === 0 ? 'text-disabled' : 'text-primary',
-                                            'rotate-180 text-xl transition-transform duration-500 ease-in-out'
-                                        )}
-                                    />
-                                )}
-                            </button>
+                            {
+                                <IconButton
+                                    isEnabled={state.filter.sort.length > 0}
+                                    isSpinning={state.filter.order === 'desc'}
+                                    onClick={() => handleChangeOrder(state.filter.order === 'asc' ? 'desc' : 'asc')}
+                                >
+                                    <IoFilter className="text-xl" />
+                                </IconButton>
+                            }
                         </div>
                     </div>
                 </Typography>
@@ -151,12 +152,12 @@ const DataTable = ({ headers, modals, sizeOptions, apiServices }) => {
                                             disabled={loading}
                                         >
                                             <div className="relative flex items-center">
-                                                <span className="whitespace-nowrap">{header.label}</span>
+                                                <span className="whitespace-nowrap text-txt">{header.label}</span>
 
-                                                {state.filter._order === 'asc' ? (
+                                                {state.filter.order === 'asc' ? (
                                                     <FaArrowDown
                                                         className={classNames(
-                                                            state.filter._sort.includes(header.id)
+                                                            state.filter.sort.includes(header.id)
                                                                 ? 'text-secondary'
                                                                 : 'text-transparent',
                                                             'absolute right-[-22px] z-50 text-sm duration-500 ease-in-out group-hover:text-secondary'
@@ -165,7 +166,7 @@ const DataTable = ({ headers, modals, sizeOptions, apiServices }) => {
                                                 ) : (
                                                     <FaArrowDown
                                                         className={classNames(
-                                                            state.filter._sort.includes(header.id)
+                                                            state.filter.sort.includes(header.id)
                                                                 ? 'text-secondary'
                                                                 : 'text-transparent',
                                                             'absolute right-[-22px] z-10 rotate-180 text-sm transition-transform duration-500 ease-in-out group-hover:text-secondary'
@@ -198,11 +199,32 @@ const DataTable = ({ headers, modals, sizeOptions, apiServices }) => {
 
                                           {headers.map((header) => (
                                               <TableCell key={header.id} align={header.dataAlign} width={header.width}>
-                                                  {typeof item[header.id] === 'boolean' ? (
-                                                      <Checkbox checked={item[header.id]} />
-                                                  ) : (
-                                                      item[header.id]
-                                                  )}
+                                                  {(() => {
+                                                      switch (header.type) {
+                                                          case 'boolean':
+                                                              return <Checkbox checked={get(item, header.id)} />;
+                                                          case 'array':
+                                                              return (
+                                                                  <div className="flex">
+                                                                      {Array.isArray(get(item, header.id)) &&
+                                                                          get(item, header.id).map(
+                                                                              (arrayItem, index) => (
+                                                                                  <ArrayItem
+                                                                                      key={index}
+                                                                                      text={arrayItem}
+                                                                                  />
+                                                                              )
+                                                                          )}
+                                                                  </div>
+                                                              );
+                                                          case 'image':
+                                                              return <ImageItem src={get(item, header.id)} />;
+                                                          case 'text':
+                                                              return get(item, header.id);
+                                                          default:
+                                                              return get(item, header.id);
+                                                      }
+                                                  })()}
                                               </TableCell>
                                           ))}
                                       </TableRow>
@@ -215,9 +237,9 @@ const DataTable = ({ headers, modals, sizeOptions, apiServices }) => {
                         disabled={loading}
                         rowsPerPageOptions={sizeOptions}
                         component="div"
-                        count={100}
-                        rowsPerPage={state.filter._limit}
-                        page={state.filter._page - 1}
+                        count={total ?? 0}
+                        rowsPerPage={state.filter.limit}
+                        page={state.filter.page - 1}
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={handleChangeSize}
                     />
@@ -227,4 +249,34 @@ const DataTable = ({ headers, modals, sizeOptions, apiServices }) => {
     );
 };
 
+const ArrayItem = ({ text }) => {
+    return (
+        <div className="my-1 me-2 flex w-fit flex-row items-center rounded-full bg-secondary_bg px-4 py-1 text-secondary transition duration-150 hover:bg-secondary hover:text-secondary_bg">
+            <span className="text-xs font-medium">{text}</span>
+        </div>
+    );
+};
+
+const ImageItem = ({ height = '32px', width = '32px', src = '', ...props }) => {
+    return <img src={src} height={height} width={width} {...props} />;
+};
+
+const IconButton = ({ isEnabled = true, isSpinning = false, onClick, children }) => {
+    return (
+        <button
+            disabled={!isEnabled}
+            onClick={onClick}
+            className={classNames(
+                isEnabled ? 'text-primary' : 'text-disabled',
+                'text-xl duration-500 ease-in-out',
+                isSpinning ? 'rotate-180' : 'rotate-0',
+                'transition-transform'
+            )}
+        >
+            {children}
+        </button>
+    );
+};
+
+export { TABLE_TYPES };
 export default DataTable;

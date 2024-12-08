@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -45,6 +45,12 @@
         --color-scrollbar: hsl(0, 0%, 60%);
         --color-scrollbar_hover: hsl(215, 13%, 47%);
         --color-disabled: hsl(238, 15%, 63%);
+    }
+
+    :root .light {
+        --color-success: hsl(144.9, 100%, 39.22%);
+        --color-warning: hsl(45, 100%, 51.4%);
+        --color-error: hsl(4.11, 89.62%, 58.43%);
     }
 
     :root .purple-blue.light {
@@ -96,6 +102,9 @@
         --color-search-icon: hsla(0, 0%, 0%, 0.54);
         --color-scrollbar: hsl(183, 100%, 33%);
         --color-scrollbar_hover: hsl(183, 100%, 42%);
+        --color-success: hsl(144.9, 100%, 39.22%);
+        --color-warning: hsl(45, 100%, 51.4%);
+        --color-error: hsl(4.11, 89.62%, 58.43%);
     }
 
     :root .ocean.dark {
@@ -130,6 +139,9 @@
         --color-search-icon: hsla(0, 0%, 0%, 0.54);
         --color-scrollbar: hsl(14, 100%, 46%);
         --color-scrollbar_hover: hsl(14, 100%, 63%);
+        --color-success: hsl(144.9, 100%, 39.22%);
+        --color-warning: hsl(45, 100%, 51.4%);
+        --color-error: hsl(4.11, 89.62%, 58.43%);
     }
 
     :root .sunset.dark {
@@ -164,6 +176,9 @@
         --color-search-icon: hsla(0, 0%, 0%, 0.54);
         --color-scrollbar: hsl(0, 0%, 62%);
         --color-scrollbar_hover: hsl(0, 0%, 46%);
+        --color-success: hsl(144.9, 100%, 39.22%);
+        --color-warning: hsl(45, 100%, 51.4%);
+        --color-error: hsl(4.11, 89.62%, 58.43%);
     }
 
     :root .grayscale.dark {

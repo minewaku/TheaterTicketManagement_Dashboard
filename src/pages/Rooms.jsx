@@ -1,11 +1,11 @@
 import { DataTable } from "~/components/Table"
 import { TABLE_HEADERS } from "~/store/constants"
-import { PostModal } from "~/components/Modal"
+import { RoomModal } from "~/components/Modal"
 import { SIZE_OPTIONS_1 } from "~/store/constants"
-import * as postService from '~/services';
+import * as roomService from '~/services/roomService';
 
 const Rooms = () => {
-    return <DataTable headers={TABLE_HEADERS.POSTS} modals={PostModal} sizeOptions={SIZE_OPTIONS_1} apiServices={postService}></DataTable>
+    return <DataTable label="Room" headers={TABLE_HEADERS.ROOMS} modals={RoomModal} sizeOptions={SIZE_OPTIONS_1} apiServices={roomService}></DataTable>
 }
 
 export default Rooms
