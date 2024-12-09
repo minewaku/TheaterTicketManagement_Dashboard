@@ -11,13 +11,17 @@ const { post, put, del } = foodService;
 
 const Create = () => {
     const { closeModal } = useModal();
-    const { details, handleChange, handleSubmit } = useForm({
+    const { details, handleChange, handleImage, handleSubmit } = useForm({
         name: '',
         foodType: '',
         desciption: '',
         image: '',
         amount: 0,
     });
+
+    useEffect(() => {
+        details.image.replace('C:\\fakepath\\', 'src/assets/Food/');
+    }, [details]);
 
     return (
         <Modal
@@ -96,7 +100,7 @@ const Create = () => {
                         </div>
 
                         <div className="w-1/2 ps-2">
-                            <ImagePreview name="image" onChange={handleChange} />
+                            <ImagePreview name="image" onChange={handleImage} pathToStore="Food" />
                         </div>
                     </div>
 
@@ -116,7 +120,7 @@ const Create = () => {
 
 const Edit = ({ data }) => {
     const { closeModal } = useModal();
-    const { details, handleChange, handleSubmit } = useForm({
+    const { details, handleChange, handleImage, handleSubmit } = useForm({
         id: data.id,
         name: data.name,
         foodType: data.foodType,
@@ -217,7 +221,7 @@ const Edit = ({ data }) => {
                         </div>
 
                         <div className="w-1/2 ps-2">
-                            <ImagePreview name="image" onChange={handleChange} />
+                            <ImagePreview name="image" onChange={handleImage} pathToStore="Food" />
                         </div>
                     </div>
 

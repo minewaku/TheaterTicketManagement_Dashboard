@@ -11,6 +11,8 @@ import { FaRegEye } from 'react-icons/fa';
 import classNames from 'classnames';
 import { useModal } from '~/hooks';
 import { filterReducer, initialState } from '~/store/reducers/filterReducer';
+import { FormControl, Select, InputLabel, MenuItem } from '@mui/material';
+import { HiOutlineSearch } from 'react-icons/hi';
 import { FILTER_ACTIONS } from '~/store/reducers/actions';
 
 const TABLE_TYPES = {
@@ -18,7 +20,7 @@ const TABLE_TYPES = {
     DETAILS_TABLE: 'DETAILS_TABLE',
 };
 
-const DataTable = ({ label = 'Datatable', headers, modals, sizeOptions, apiServices }) => {
+const DataTable = ({ label = 'Datatable', searchBar = [], headers, modals, sizeOptions, apiServices }) => {
     const { modal, openModal } = useModal();
 
     const [data, setData] = useState([]);
@@ -28,13 +30,23 @@ const DataTable = ({ label = 'Datatable', headers, modals, sizeOptions, apiServi
 
     const [state, dispatch] = useReducer(filterReducer, {
         ...initialState,
-        filter: { ...initialState.filter, limit: sizeOptions[0] },
+        filter: {
+            ...initialState.filter,
+            criteria: searchBar?.reduce((acc, item) => {
+                acc[item.id] = null;
+                return acc;
+            }, {}),
+            limit: sizeOptions[0],
+        },
     });
 
     const fetchData = async () => {
         try {
             setLoading(true);
             const response = await apiServices.get(state.filter);
+            console.log("state.filter ne heheh: ", state.filter);
+            console.log("API SERVICES NE HAHA: ", apiServices);
+            console.log("response ne heheh: ", response);
             setData(response.records);
             setTotal(response.totalRecords);
             setLoading(false);
@@ -45,6 +57,15 @@ const DataTable = ({ label = 'Datatable', headers, modals, sizeOptions, apiServi
             setSelected([]);
         }
     };
+
+    const handleSelectCriteria = (event) => {
+        console.log("event: ", event);
+        dispatch({
+            type: FILTER_ACTIONS.SET_CRITERIA,
+            payload: { criteria: { ...state.filter.criteria, [event.target.name]: event.target.value } },
+        });
+        console.log("state.filter.criteria: ", state.filter.criteria);
+    }
 
     useEffect(() => {
         fetchData();
@@ -72,6 +93,33 @@ const DataTable = ({ label = 'Datatable', headers, modals, sizeOptions, apiServi
                 <Typography variant="h6" component="div" sx={{ px: 3, py: 3 }}>
                     <div className="flex items-center justify-between">
                         <span className="text-xl font-bold text-txt">{label}</span>
+
+                        {Array.isArray(searchBar) && searchBar.length > 0 ? (
+                            <div>
+                                {searchBar.map((item) => {
+                                    return item.type === 'select' ? (
+                                        <div className="pb-4 w-[320px]" key={item}>
+                                            <FormControl fullWidth>
+                                                <InputLabel>{item.label}</InputLabel>
+                                                <Select
+                                                    id={item.id}
+                                                    value={state.filter.criteria[item.id]}
+                                                    label={item.label}
+                                                    onChange={handleSelectCriteria}
+                                                    name={item.name}
+                                                >
+                                                    {item.data?.map((item, index) => (
+                                                        <MenuItem key={index} value={item.id}>
+                                                            {item.name}
+                                                        </MenuItem>
+                                                    ))}
+                                                </Select>
+                                            </FormControl>
+                                        </div>
+                                    ) : null;
+                                })}
+                            </div>
+                        ) : null}
 
                         <div className="flex items-center gap-x-3">
                             {modals.Inspect ? (

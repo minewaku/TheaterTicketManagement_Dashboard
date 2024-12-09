@@ -55,7 +55,7 @@ const cleanParams = (params) => {
         delete params.sort;
         delete params.order;
     }
-    
+
     return Object.fromEntries(
         Object.entries(params).filter(([key, value]) => {
             if (value === null || value == '') return false;
@@ -70,12 +70,27 @@ const joinParams = (arr) => {
     return arr.join(',');
 };
 
+// const flattenParams = (obj, prefix = '', result = {}) => {
+//     for (const key in obj) {
+//         if (obj.hasOwnProperty(key)) {
+//             const newKey = prefix ? `${prefix}.${key}` : key;
+//             if (typeof obj[key] === 'object' && obj[key] !== null) {
+//                 flattenParams(obj[key], newKey, result); // Corrected the recursive call
+//             } else {
+//                 result[newKey] = obj[key];
+//             }
+//         }
+//     }
+//     return result;
+// };
+
 const flattenParams = (obj, prefix = '', result = {}) => {
     for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
             const newKey = prefix ? `${prefix}.${key}` : key;
             if (typeof obj[key] === 'object' && obj[key] !== null) {
-                flattenObject(obj[key], newKey, result);
+                // If prefix is empty, don't include it in the new key
+                flattenParams(obj[key], prefix === '' ? '' : newKey, result);
             } else {
                 result[newKey] = obj[key];
             }
@@ -84,9 +99,32 @@ const flattenParams = (obj, prefix = '', result = {}) => {
     return result;
 };
 
+const cleanedCriteria = (obj) => {
+    const result = {};
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            const value = obj[key];
+            if (value && typeof value === 'object') {
+                // Recursively clean nested objects
+                const cleanedValue = cleanedCriteria(value);
+                if (Object.keys(cleanedValue).length > 0) {
+                    result[key] = cleanedValue;
+                }
+            } else if (value !== null && value !== '') {
+                // Add to result if value is not null or empty
+                result[key] = value;
+            }
+        }
+    }
+    return result;
+};
+
 const get = async (path, params = {}, data = {}) => {
-    const cleanedParams = cleanParams({ ...params, sort: params.sort ? joinParams(params.sort) : undefined });
+    console.log('Params: ', params);
+    const cleanedParams = cleanParams({ ...params, criteria: cleanedCriteria(params.criteria), sort: params.sort ? joinParams(params.sort) : undefined });
+    console.log('Cleaned Params: ', cleanedParams);
     const flattenedParams = flattenParams(cleanedParams);
+    console.log('Flattened Params: ', flattenedParams);
     const response = await httpRequest.get(path, { params: flattenedParams });
     return response;
 };

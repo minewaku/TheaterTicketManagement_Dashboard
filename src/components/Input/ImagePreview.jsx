@@ -3,7 +3,7 @@ import Input from '@mui/material/Input';
 import { useState } from 'react';
 import { IMAGE_HOLDER } from '~/assets';
 
-const ImagePreview = ({ scr = '', className = '', height = 'auto', width = '100%', onChange, ...props }) => {
+const ImagePreview = ({ scr = '', pathToStore, className = '', height = 'auto', width = '100%', onChange, ...props }) => {
     const [source, setSource] = useState(scr);
     const PATH_TO_STORE = 'src/assets/products/';
 
@@ -15,15 +15,21 @@ const ImagePreview = ({ scr = '', className = '', height = 'auto', width = '100%
                 setSource(reader.result);
             };
             reader.readAsDataURL(file);
-            console.log("onChange: ", onChange)
-            onChange(e);
+            console.log('onChange: ', onChange);
+            onChange(e, pathToStore);
         }
     };
 
     return (
         <Container className={className}>
-            <Box className="rounded-md p-[2px] shadow-[0_0_12px_#999999] mb-3" height={height} width={width}>
-                <img src={source || scr || IMAGE_HOLDER} alt="Preview" height={height} width={width} className='rounded-md'/>
+            <Box className="mb-3 rounded-md p-[2px] shadow-[0_0_12px_#999999]" height={height} width={width}>
+                <img
+                    src={source || scr || IMAGE_HOLDER}
+                    alt="Preview"
+                    height={height}
+                    width={width}
+                    className="rounded-md"
+                />
             </Box>
 
             <input type="file" onChange={handleChange} accept="image/*" {...props} />

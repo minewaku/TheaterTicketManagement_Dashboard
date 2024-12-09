@@ -17,15 +17,13 @@ const get = async (params, data) => {
         const ticketsResponse = await httpRequest.get('reservation/api/Ticket/getAll', params, data);
         const tickets = ticketsResponse?.data.records;
 
-        // Process the tickets to include foodQnt, seatQnt, discountQnt
         const processedTickets = tickets.map((ticket) => ({
             ...ticket,
-            foodQnt: ticket.FoodDetail ? ticket.FoodDetail.reduce((sum, food) => sum + (food.quantity || 0), 0) : 0,
-            seatQnt: ticket.SeatDetail ? ticket.SeatDetail.reduce((sum, seat) => sum + (seat.quantity || 0), 0) : 0,
-            discountQnt: ticket.DiscountDetail
-                ? ticket.DiscountDetail.reduce((sum, discount) => sum + (discount.quantity || 0), 0)
-                : 0,
+            foodQnt: Array.isArray(ticket.foodDetail) ? ticket.foodDetail.length : 0,
+            seatQnt: Array.isArray(ticket.seatDetail) ? ticket.seatDetail.length : 0,
         }));
+
+        console.log('Processed Tickets:', processedTickets);
         ticketsResponse.data.records = processedTickets;
 
         return ticketsResponse.data;

@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import Grid from '@mui/material/Grid2';
 import { useModal } from '~/hooks';
 import { SeatModal } from '../components/Modal';
-import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react';
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react';
 
 import { RiLoopLeftFill } from 'react-icons/ri';
 import { FaRegTrashAlt } from 'react-icons/fa';
@@ -132,16 +132,6 @@ const Seats = () => {
             toast.error('Error fetching seats:', error);
         }
     };
-
-    // const handleEditCurrentSeat = (seat) => {
-    //     if (isSeatValid(seat.row, seat.column, seat.seatType === 'couple' ? 'single' : 'couple')) {
-    //         openModal(
-    //             <SeatModal.Edit data={{ ...seat, seatType: seat.seatType === 'couple' ? 'single' : 'couple' }} />
-    //         );
-    //     } else {
-    //         alert('Invalid position for this seat');
-    //     }
-    // };
 
     const handleEditCurrentSeat = (seat) => {
         if (isSeatValid(seat.row, seat.column, seat.seatType === 'couple' ? 'single' : 'couple')) {
@@ -452,3 +442,85 @@ const Seats = () => {
 export default Seats;
 
 // toast, table ticket, table payment, upadte checkrole, fix ui, add search bar, add, statictis
+
+// [
+//     {
+//         id: '675574222870b22266d8f1bd',
+//         userId: '6735c1bfbd264edbe30ddebd',
+//         ticketId: '675570500a1302a923b24c18',
+//         paymentId: '14729141',
+//         movieDetail: {
+//             id: '673f3e3ca83bd7136617629d',
+//             name: 'Bochi The Rock',
+//             director: 'Bochi',
+//             actors: 'Bochi',
+//             author: 'Bochi',
+//             description: 'The guitar hero!',
+//             dub: 'Tiếng Việt',
+//             subTitle: 'Tiếng Việt',
+//         },
+//         paymentMethod: 'VnPay',
+//         showTime: '2024-11-30T01:20:00',
+//         seatDetail: [
+//             {
+//                 id: '67457fd5da2c3e752f04c815',
+//                 roomNumber: '02',
+//                 row: 'A',
+//                 column: '3',
+//                 seatType: 'single',
+//             },
+//         ],
+//         foodDetail: [
+//             {
+//                 id: '6743f2b4381e099898c8d3a7',
+//                 name: 'Pepsi',
+//                 foodType: 'M',
+//                 description: 'Nước ngọt',
+//                 amount: 300,
+//             },
+//         ],
+//         discountDetail: {
+//             id: '67556eb60a1302a923b24c15',
+//             foodType: 'M',
+//             seatType: 'single',
+//             percentOff: 20,
+//         },
+//         baseAmount: 55300,
+//         totalAmount: 44240,
+//         genres: ['Hài hước', 'Hoạt hình'],
+//         ticketCreatedDate: '2024-12-08T17:09:20.009',
+//     },
+//     {
+//         id: '6755a7bd71682e3fc8dbb13d',
+//         userId: '673deb262558761a6109d568',
+//         ticketId: '6755a759fb03361b9d05e7dc',
+//         paymentId: '14729582',
+//         movieDetail: {
+//             id: '6743f62d5e27e6508b7b44c6',
+//             name: 'Goblin Slayer',
+//             director: 'Oblords',
+//             actors: 'Goblin Slayer',
+//             author: 'Unknown',
+//             description: 'Goblin Slayer and his adventure about killing goblin ',
+//             dub: 'Tiếng Nhật',
+//             subTitle: 'Tiếng Nhật',
+//         },
+//         paymentMethod: 'VnPay',
+//         showTime: '2024-12-11T17:50:07',
+//         seatDetail: [
+//             {
+//                 id: '67557b14fb03361b9d05e7c5',
+//                 roomNumber: '01',
+//                 row: 'B',
+//                 column: '3',
+//                 seatType: 'single',
+//             },
+//         ],
+//         foodDetail: null,
+//         discountDetail: null,
+//         baseAmount: 120000,
+//         totalAmount: 120000,
+//         genres: ['Hành động', 'Hoạt hình', 'Kinh dị'],
+//         ticketCreatedDate: '2024-12-08T21:04:09.006',
+//     },
+// ];
